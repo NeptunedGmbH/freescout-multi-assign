@@ -1,0 +1,21 @@
+{
+    "name": "MultiAssign",
+    "alias": "multiassign",
+    "description": "Assign multiple additional users to a conversation alongside the primary assignee.",
+    "keywords": ["freescout", "assign", "multi", "team"],
+    "homepage": "",
+    "img": "/modules/multiassign/img/module-icon.png",
+    "version": "1.0.0",
+    "requiredAppVersion": "1.8.181",
+    "license": "AGPL-3.0",
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\MultiAssign\\Providers\\MultiAssignServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

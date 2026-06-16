@@ -1,0 +1,71 @@
+.multi-assign-plus-icon {
+    font-size: 7px;
+    position: relative;
+    top: -4px;
+    left: -2px;
+}
+
+.multi-assign-dropdown a {
+    cursor: pointer;
+}
+
+.multi-assign-dropdown .glyphicon-check,
+.multi-assign-dropdown .glyphicon-unchecked {
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.multi-assign-dropdown .glyphicon-check {
+    color: #0078d7;
+}
+
+col.conv-multi-assignee {
+    width: 140px;
+}
+
+th.conv-multi-assignee {
+    font-size: 13px;
+}
+
+td.conv-multi-assignee {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    color: #888;
+}
+
+.multi-assign-create-group .dropdown-toggle {
+    text-align: left;
+    min-width: 200px;
+}
+
+.multi-assign-create-group .dropdown-toggle .caret {
+    float: right;
+    margin-top: 8px;
+}
+
+.multi-assign-create-dropdown a {
+    cursor: pointer;
+}
+
+.multi-assign-create-dropdown .glyphicon-check,
+.multi-assign-create-dropdown .glyphicon-unchecked {
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.multi-assign-create-dropdown .glyphicon-check {
+    color: #0078d7;
+}
+
+.multi-assign-clear-all {
+    color: #999;
+    font-size: 12px;
+}
+
+.multi-assign-clear-all .glyphicon {
+    font-size: 10px;
+    margin-right: 3px;
+}
