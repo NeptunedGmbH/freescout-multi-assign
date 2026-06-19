@@ -11,6 +11,7 @@
                 <div class="col-sm-6">
                     <div class="checkbox">
                         <label>
+                            <input type="hidden" name="settings[multi_assign.show_in_assigned_folder]" value="0">
                             <input type="checkbox" name="settings[multi_assign.show_in_assigned_folder]" value="1" {{ !empty($settings['multi_assign.show_in_assigned_folder']) ? 'checked' : '' }}>
                             {{ __('Show additionally-assigned tickets in the user\'s "Mine" folder') }}
                         </label>
@@ -24,6 +25,7 @@
                 <div class="col-sm-6">
                     <div class="checkbox">
                         <label>
+                            <input type="hidden" name="settings[multi_assign.notify_additional_assignees]" value="0">
                             <input type="checkbox" name="settings[multi_assign.notify_additional_assignees]" value="1" {{ !empty($settings['multi_assign.notify_additional_assignees']) ? 'checked' : '' }}>
                             {{ __('Send notifications to additional assignees') }}
                         </label>
@@ -37,6 +39,7 @@
                 <div class="col-sm-6">
                     <div class="checkbox">
                         <label>
+                            <input type="hidden" name="settings[multi_assign.show_list_column]" value="0">
                             <input type="checkbox" name="settings[multi_assign.show_list_column]" value="1" {{ !empty($settings['multi_assign.show_list_column']) ? 'checked' : '' }}>
                             {{ __('Show "Additional Assignees" column in the conversation list') }}
                         </label>

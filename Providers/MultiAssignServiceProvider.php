@@ -118,10 +118,10 @@ class MultiAssignServiceProvider extends ServiceProvider
             }
             return [
                 'settings' => [
-                    'multi_assign.show_in_assigned_folder'    => ['env' => 'MULTIASSIGN_SHOW_FOLDER'],
-                    'multi_assign.notify_additional_assignees' => ['env' => 'MULTIASSIGN_NOTIFY'],
-                    'multi_assign.show_list_column'            => ['env' => 'MULTIASSIGN_LIST_COLUMN'],
-                    'multi_assign.max_assignees'               => ['env' => 'MULTIASSIGN_MAX'],
+                    'multi_assign.show_in_assigned_folder'     => [],
+                    'multi_assign.notify_additional_assignees' => [],
+                    'multi_assign.show_list_column'            => [],
+                    'multi_assign.max_assignees'               => [],
                 ],
             ];
         }, 20, 2);
@@ -476,6 +476,10 @@ class MultiAssignServiceProvider extends ServiceProvider
                 return;
             }
             ConversationAssignee::whereIn('conversation_id', $conversation_ids)->delete();
+        }, 20, 1);
+
+        \Eventy::addAction('user.deleted', function ($user) {
+            ConversationAssignee::where('user_id', $user->id)->delete();
         }, 20, 1);
     }
 

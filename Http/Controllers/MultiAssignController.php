@@ -45,30 +45,50 @@ class MultiAssignController extends Controller
             return \Response::json($response);
         }
 
-        $was_assigned = ConversationAssignee::isAssigned($conversation->id, $target_user_id);
-
-        if (!$was_assigned) {
-            $max = MultiAssignServiceProvider::getMaxAssignees();
-            if ($max > 0) {
-                $current_count = count(ConversationAssignee::getAssigneeIds($conversation->id));
-                if ($current_count >= $max) {
-                    $response['msg'] = __('Maximum of :max additional assignees reached', ['max' => $max]);
-                    return \Response::json($response);
-                }
-            }
-        }
-
         try {
-            ConversationAssignee::toggle($conversation->id, $target_user_id, $user->id);
+            $result = \DB::transaction(function () use ($conversation, $target_user_id, $user) {
+                $existing = ConversationAssignee::where('conversation_id', $conversation->id)
+                    ->where('user_id', $target_user_id)
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($existing) {
+                    $existing->delete();
+                    return 'removed';
+                }
+
+                $max = MultiAssignServiceProvider::getMaxAssignees();
+                if ($max > 0) {
+                    $current_count = ConversationAssignee::where('conversation_id', $conversation->id)
+                        ->lockForUpdate()
+                        ->count();
+                    if ($current_count >= $max) {
+                        return 'max_reached';
+                    }
+                }
+
+                ConversationAssignee::create([
+                    'conversation_id'  => $conversation->id,
+                    'user_id'          => $target_user_id,
+                    'added_by_user_id' => $user->id,
+                    'created_at'       => date('Y-m-d H:i:s'),
+                ]);
+
+                return 'added';
+            });
         } catch (\Illuminate\Database\QueryException $e) {
             $response['msg'] = __('Assignment could not be updated, please try again');
             return \Response::json($response);
         }
 
+        if ($result === 'max_reached') {
+            $response['msg'] = __('Maximum of :max additional assignees reached', ['max' => MultiAssignServiceProvider::getMaxAssignees()]);
+            return \Response::json($response);
+        }
+
         $target_user = User::find($target_user_id);
         if ($target_user) {
-            $action = $was_assigned ? 'removed' : 'added';
-            MultiAssignServiceProvider::createActivityThread($conversation, $user, $target_user, $action);
+            MultiAssignServiceProvider::createActivityThread($conversation, $user, $target_user, $result);
         }
 
         MultiAssignServiceProvider::fireWebhookEvent($conversation);
