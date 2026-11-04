@@ -22,14 +22,15 @@ class MultiAssignServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'multiassign');
-        $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/lang');
 
         $this->hooks();
     }
 
     public function register()
     {
-        //
+        // Register before any boot() call translates a string. Laravel caches
+        // the JSON catalogue on first use, so a path added in boot() is missed.
+        $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/lang');
     }
 
     private static function showListColumn()
