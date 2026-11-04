@@ -19,24 +19,25 @@
     color: #0078d7;
 }
 
-col.conv-multi-assignee {
-    width: 210px;
+.table-conversations .conv-multi-assignee {
+    width: 160px;
 }
 
 .table.table-conversations th.conv-multi-assignee {
     font-size: 13px;
+    padding-right: 8px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .table.table-conversations tbody td.conv-multi-assignee {
-    max-width: 210px;
+    max-width: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 13px;
     color: #888;
-    padding: 0 22px 0 13px;
+    padding: 0 13px;
 }
 
 .multi-assign-create-group .dropdown-toggle {
